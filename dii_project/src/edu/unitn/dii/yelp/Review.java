@@ -103,5 +103,4 @@ public class Review implements java.io.Serializable {
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
-
 }

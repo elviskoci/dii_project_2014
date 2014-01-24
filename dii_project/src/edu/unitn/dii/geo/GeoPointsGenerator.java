@@ -57,7 +57,7 @@ public class GeoPointsGenerator {
 
 			if (polygon.contains(pointX, pointY)) {
 				cood = new Coordinate(pointX, pointY);
-				
+			
 				//System.out.println ("### " + pointX);
 				pointsInsidePlace[numOfPoints] = cood;
 				numOfPoints = numOfPoints + 1;

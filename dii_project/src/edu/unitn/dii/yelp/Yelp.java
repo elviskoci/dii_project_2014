@@ -384,7 +384,7 @@ public class Yelp implements java.io.Serializable {
 		String token = "pBK0yxBYQN4xzlOAdw_IY3u1FWRVWPnZ";
 		String tokenSecret = "rKGXQkK09jIndjh7Gt1_FQrGeqc";
 
-		boolean deserialize = false;
+		boolean deserialize = true;
 		Yelp yelp = new Yelp(consumerKey, consumerSecret, token, tokenSecret);
 				
 		if(deserialize){
@@ -405,7 +405,7 @@ public class Yelp implements java.io.Serializable {
 		// pois.add("46.071444,11.126722");
 
 		try {
-			yelp.getTrentoYelpData(pois, 300, 20);
+			yelp.getTrentoYelpData(pois, 500, 20);
 			yelp.serialiseYelpData("./storage/yelp_output.ser");
 		} catch (JSONException e) {
 			e.printStackTrace();
