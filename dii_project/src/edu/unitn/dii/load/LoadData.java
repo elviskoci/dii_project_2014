@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import edu.unitn.dii.yelp.Business;
 import edu.unitn.dii.yelp.FullAddress;
@@ -34,81 +35,79 @@ public class LoadData {
 			System.exit(1);
 		}
 		
-		TreeMap<CompactVenue,Integer> foursquare_venues_rep=tt.getUniqueVenues();
-		TreeMap<Business,Integer> yelp_businesses_rep = yelp.getYelp_results();
-		
-		ArrayList<Business> foursquareBusinesses= new ArrayList<Business>();
-		Iterator<CompactVenue> vit = foursquare_venues_rep.keySet().iterator();
-		System.out.println("Number of initial number of foursquare venues: "+foursquare_venues_rep.size());
-		
-		while(vit.hasNext()){	
-					
-			CompactVenue venue = new CompactVenue();
-			venue = vit.next();
-//			if (venue.getName().indexOf("Grotta")>0){
-//				System.out.println("NAME " +venue.getName());
-//				System.out.println("PHONE "+venue.getContact().getPhone());
-//				System.out.println("URL "+venue.getUrl());
-//				System.out.println("CITY "+venue.getLocation().getCity());
-//				System.out.println("POSTAL CODE "+venue.getLocation().getPostalCode());
-//				System.out.println("CITY "+venue.getLocation().getAddress());
-//				System.out.println("");
+//		
+//		ArrayList<Business> foursquareBusinesses= new ArrayList<Business>();
+//		Iterator<CompactVenue> vit = foursquare_venues.iterator();
+//		System.out.println("Number of initial number of foursquare venues: "+foursquare_venues_rep.size());
+//		
+//		while(vit.hasNext()){	
+//					
+//			CompactVenue venue = new CompactVenue();
+//			venue = vit.next();
+////			if (venue.getName().indexOf("Grotta")>0){
+////				System.out.println("NAME " +venue.getName());
+////				System.out.println("PHONE "+venue.getContact().getPhone());
+////				System.out.println("URL "+venue.getUrl());
+////				System.out.println("CITY "+venue.getLocation().getCity());
+////				System.out.println("POSTAL CODE "+venue.getLocation().getPostalCode());
+////				System.out.println("CITY "+venue.getLocation().getAddress());
+////				System.out.println("");
+////			}
+////			
+//			Business business = new Business();
+//			business.setBid(venue.getId());
+//			business.setName(venue.getName());
+//			business.setUrl(venue.getUrl());
+//			
+//			if(venue.getContact()!=null)
+//			business.setPhone(venue.getContact().getPhone());
+//			
+//			Category[] categories= venue.getCategories();
+//			ArrayList<String> catgrs_list = new ArrayList<String>();
+//			if(categories!=null){
+//				for(int i=0;i<categories.length;i++){
+//					catgrs_list.add(categories[0].getName());
+//				}
 //			}
 //			
-			Business business = new Business();
-			business.setBid(venue.getId());
-			business.setName(venue.getName());
-			business.setUrl(venue.getUrl());
-			
-			if(venue.getContact()!=null)
-			business.setPhone(venue.getContact().getPhone());
-			
-			Category[] categories= venue.getCategories();
-			ArrayList<String> catgrs_list = new ArrayList<String>();
-			if(categories!=null){
-				for(int i=0;i<categories.length;i++){
-					catgrs_list.add(categories[0].getName());
-				}
-			}
-			
-			business.setCategories(catgrs_list);
-			
-			if(venue.getStats()!=null){
-				business.setCheckins_count(venue.getStats().getCheckinsCount());
-				business.setUsers_count(venue.getStats().getUsersCount());
-			}
+//			business.setCategories(catgrs_list);
+//			
+//			if(venue.getStats()!=null){
+//				business.setCheckins_count(venue.getStats().getCheckinsCount());
+//				business.setUsers_count(venue.getStats().getUsersCount());
+//			}
+//		
+//			if(venue.getTips()!=null){
+//				business.setTips_count(venue.getTips().getCount());
+//			}	
+//			
+//			Location location = venue.getLocation();
+//			FullAddress loc = new FullAddress();
+//			
+//			if(location!=null){
+//				loc=new FullAddress(location.getAddress(),location.getCity()
+//						,location.getState(), location.getCountry(),
+//						location.getPostalCode(),location.getLat(),
+//						location.getLng());
+//			}
+//			
+//			business.setFullAddress(loc);
+//			foursquareBusinesses.add(business);
+//			
+////			ArrayList<Review> review = new ArrayList<Review>();
+//		}
 		
-			if(venue.getTips()!=null){
-				business.setTips_count(venue.getTips().getCount());
-			}	
-			
-			Location location = venue.getLocation();
-			FullAddress loc = new FullAddress();
-			
-			if(location!=null){
-				loc=new FullAddress(location.getAddress(),location.getCity()
-						,location.getState(), location.getCountry(),
-						location.getPostalCode(),location.getLat(),
-						location.getLng());
-			}
-			
-			business.setFullAddress(loc);
-			foursquareBusinesses.add(business);
-			
-//			ArrayList<Review> review = new ArrayList<Review>();
-		}
-	
-		System.out.println("Number of copied venues: "+foursquareBusinesses.size());
-		System.out.println("Number of businesses: "+yelp_businesses_rep.size());
-		System.out.println("Total number of businesses before combination: "
-								+(yelp_businesses_rep.size()+foursquareBusinesses.size()));
-		
+		TreeMap<Business,Integer> yelp_businesses_rep = yelp.getYelp_results();
+		ArrayList<Business> foursquareBusinesses= new ArrayList<Business>(tt.getFoursquare_businesses());		
 		ArrayList<Business> yelpBusinesses = new ArrayList<Business>(yelp_businesses_rep.keySet());
+		
 		Collections.sort(foursquareBusinesses,new SortByBusinessName());
 		Collections.sort(yelpBusinesses,new SortByBusinessName());
 		
-		System.out.println("Size of yelpBusinesses: "+yelpBusinesses.size());
-		System.out.println("Size of venueToBusiness: "+foursquareBusinesses.size());
+		System.out.println("Number of copied foursquare venues: "+foursquareBusinesses.size());
+		System.out.println("Number of yelp businesses: "+yelpBusinesses.size());
+		System.out.println("Total number of businesses before combination: "
+								+(yelp_businesses_rep.size()+foursquareBusinesses.size()));
 		
 		Iterator<Business> vbsitr  =  foursquareBusinesses.iterator();
 		TreeMap<Business,Integer> matching_foursquare = new TreeMap<Business,Integer>();

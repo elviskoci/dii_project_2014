@@ -18,7 +18,7 @@ tmp/**/*
 
 # Eclipse project files
 #local.properties
-#.classpath
+.classpath
 #.settings/
 #.loadpath
 #.project

@@ -44,7 +44,7 @@ public class TrentinoTips implements java.io.Serializable {
 	private transient static int trials=1;
 	private transient int totalNrTips = 0;
 	
-	private void executeBatchTipQueries(ArrayList<String> geopoints, String serialization_file){
+	public void executeBatchTipQueries(ArrayList<String> geopoints, String serialization_file){
 		  	  
 		  Iterator<String> itr= geopoints.iterator();
 		  
@@ -70,6 +70,14 @@ public class TrentinoTips implements java.io.Serializable {
 				e.printStackTrace();
 			}
 		  }  
+		  
+		  foursquareDataToBusinessData();
+		  try {
+				serialiseTips(serialization_file);
+		  } catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		  }
 	  }
 	  
 	  //Find the unique the tips, venues and locations from the repeated data.
@@ -541,20 +549,12 @@ public class TrentinoTips implements java.io.Serializable {
 		    System.out.println("The file was deserialized: "+file);
 		    return tips;
 	  }
+	  
+	public TreeSet<Business> getFoursquare_businesses() {
+		return foursquare_businesses;
+	}
 
-	  public ArrayList<CompleteTip[]> getResults() {
-		return results;
-	  }
-
-	  public TreeMap<CompleteTip, Integer> getUniqueTips() {
-		return uniqueTips;
-	  }
-
-	  public TreeMap<CompactVenue, Integer> getUniqueVenues() {
-		return uniqueVenues;
-	  } 
-	
-	  public static void main(String[] args) {
+	public static void main(String[] args) {
 			
 		boolean deserialize = false;
 		TrentinoTips tt= new TrentinoTips() ;
