@@ -232,7 +232,7 @@ public class LoadData {
     			str1 = a.getName().toLowerCase().replaceAll("\\s","");
     			str2 = b.getName().toLowerCase().replaceAll("\\s","");
     			
-    			String[] specialWords={"bar","ristorante","pizzeria","caffé","caffe","caffe'",
+    			String[] specialWords={"bar","ristorante","pizzeria","caffï¿½","caffe","caffe'",
     					"pasticceria","studio","supermercato","associazione","trattoria",
     					"antica","antico"};
     			
@@ -433,7 +433,6 @@ public class LoadData {
 	
 	class SortByBusinessName implements Comparator<Business> , java.io.Serializable{
 		private static final long serialVersionUID = 1L;
-
 		public int compare(Business a, Business b) {
 			
 			return a.getName().compareTo(b.getName());

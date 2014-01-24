@@ -47,15 +47,17 @@ public class City {
 		
 		//Rework: there is better way of chaning arraylist to array, but it is not working..try later
 		for ( int i = 0 ;  i < boundaryPoints ; i++){
-			xPoints[i] = boundary.get(1).get(i);
-			yPoints[i] = boundary.get(0).get(i);							
+
+			//System.out.println("%%% " + boundary.get(0).get(i));
+			xPoints[i] = boundary.get(0).get(i);
+			yPoints[i] = boundary.get(1).get(i);							
 		}
 		
 		//retrieve list of random points inside the given city
 		Coordinate [] pointsInsidePlace = new Coordinate[numberOfPoints]; 
 		pointsInsidePlace = geoPointGenerator.generatePoints(numberOfPoints ,  xPoints ,yPoints);
 		
-		
+		/*
 		String str = "";
 		for (int i = 0 ; i < numberOfPoints ; i++){
 			str = str + "add(\"" + pointsInsidePlace[i].getLatitude() + " , " + pointsInsidePlace[i].getLongitude() + "\");" + "\n";
@@ -63,7 +65,8 @@ public class City {
 			
 		}
 		System.out.println(str);
-		
+		*/
+
 		
 		return pointsInsidePlace;
 		
