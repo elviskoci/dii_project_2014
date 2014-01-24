@@ -59,8 +59,8 @@ public class Query {
 		//now 3 blocks			
 		//System.out.println(pointsArray.size() + "%%%");
 
-	TrentinoTips tt = new TrentinoTips();
-		//tt.executeBatchTipQueries( pointsArray.get(0),"./storage/foursquare_output.ser");
+	    TrentinoTips tt = new TrentinoTips();
+		tt.executeBatchTipQueries( pointsArray.get(0),"./storage/foursquare_output.ser");
 
 		///*
 		  try { 
