@@ -153,71 +153,77 @@ public class HBaseHelper {
 	public void insertBusiness(HTable table, byte[] rowKey, Business business)
 			throws IOException {
 		
-		Put put = new Put(rowKey);
-		put.add(Bytes.toBytes("business"), Bytes.toBytes("name"),
-				Bytes.toBytes(business.getName()));
-		
-//		CATEGORIES
-		ArrayList<String> categories= business.getCategories();
-		String concat_categories="";
-		for(int i=0;i<categories.size();i++){
-			concat_categories=concat_categories+categories.get(i)+",";
+		try{
+			Put put = new Put(rowKey);
+			put.add(Bytes.toBytes("business"), Bytes.toBytes("name"),
+					Bytes.toBytes(business.getName()));
+			
+	//		CATEGORIES
+			ArrayList<String> categories= business.getCategories();
+			String concat_categories="";
+			for(int i=0;i<categories.size();i++){
+				concat_categories=concat_categories+categories.get(i)+",";
+			}
+			concat_categories=concat_categories.substring(0, concat_categories.length());
+			put.add(Bytes.toBytes("business"), Bytes.toBytes("categories"),
+					Bytes.toBytes(concat_categories));
+			
+	//		CONTACTS
+			put.add(Bytes.toBytes("business"), Bytes.toBytes("phone"), 
+					Bytes.toBytes(business.getPhone()));
+			put.add(Bytes.toBytes("business"), Bytes.toBytes("url"),
+					Bytes.toBytes(business.getUrl()));
+			put.add(Bytes.toBytes("business"), Bytes.toBytes("formated phone"),
+					Bytes.toBytes(business.getFormated_phone()));
+	
+	//		METRICS
+			put.add(Bytes.toBytes("business"), Bytes.toBytes("rating"),
+					Bytes.toBytes(business.getRating()));
+			put.add(Bytes.toBytes("business"), Bytes.toBytes("checkins count"),
+					Bytes.toBytes(business.getCheckins_count()));
+			put.add(Bytes.toBytes("business"), Bytes.toBytes("reviews count"),
+					Bytes.toBytes(business.getReviews_count()));
+			
+			//Foursquare API returns always null; 	
+			put.add(Bytes.toBytes("business"), Bytes.toBytes("tips count"),
+					Bytes.toBytes(business.getTips_count()));
+			
+			//data not provided by Foursquare API.
+			//put.add(Bytes.toBytes("metrics"), Bytes.toBytes("likes count"),
+			//		Bytes.toBytes(business.getLikes_count()));
+			
+			//Should this be put into reviews?
+			//put.add(Bytes.toBytes("business"), Bytes.toBytes("snippet text"),
+			//		Bytes.toBytes(business.getSnippet_text()));
+			
+	//		LOCATION
+			
+//			put.add(Bytes.toBytes("location"), Bytes.toBytes("address"),
+//					Bytes.toBytes(business.getFullAddress().getAddress()));
+//			put.add(Bytes.toBytes("location"), Bytes.toBytes("formated address"),
+//					Bytes.toBytes(business.getFullAddress().getDisplay_address()));
+//			put.add(Bytes.toBytes("location"), Bytes.toBytes("city"),
+//					Bytes.toBytes(business.getFullAddress().getCity()));
+//			put.add(Bytes.toBytes("location"), Bytes.toBytes("state"),
+//					Bytes.toBytes(business.getFullAddress().getState()));
+//			put.add(Bytes.toBytes("location"), Bytes.toBytes("state code"),
+//					Bytes.toBytes(business.getFullAddress().getState_code()));
+//			put.add(Bytes.toBytes("location"), Bytes.toBytes("country"),
+//					Bytes.toBytes(business.getFullAddress().getCountry()));
+//			put.add(Bytes.toBytes("location"), Bytes.toBytes("country code"),
+//					Bytes.toBytes(business.getFullAddress().getCountry_code()));
+//			put.add(Bytes.toBytes("location"), Bytes.toBytes("postal"),
+//					Bytes.toBytes(business.getFullAddress().getPostal_code()));
+//			put.add(Bytes.toBytes("location"), Bytes.toBytes("latitude"),
+//					Bytes.toBytes(business.getFullAddress().getLatitude()));
+//			put.add(Bytes.toBytes("location"), Bytes.toBytes("longitude"),
+//					Bytes.toBytes(business.getFullAddress().getLongitude()));
+//			
+			table.put(put);
+		}catch (NullPointerException e){
+			
+			System.out.println("NULL VALUE WAS FOUND");
 		}
-		concat_categories=concat_categories.substring(0, concat_categories.length());
-		put.add(Bytes.toBytes("business"), Bytes.toBytes("categories"),
-				Bytes.toBytes(concat_categories));
-		
-//		CONTACTS
-		put.add(Bytes.toBytes("business"), Bytes.toBytes("phone"), 
-				Bytes.toBytes(business.getPhone()));
-		put.add(Bytes.toBytes("business"), Bytes.toBytes("url"),
-				Bytes.toBytes(business.getUrl()));
-		put.add(Bytes.toBytes("business"), Bytes.toBytes("formated phone"),
-				Bytes.toBytes(business.getFormated_phone()));
-
-//		METRICS
-		put.add(Bytes.toBytes("business"), Bytes.toBytes("rating"),
-				Bytes.toBytes(business.getRating()));
-		put.add(Bytes.toBytes("business"), Bytes.toBytes("checkins count"),
-				Bytes.toBytes(business.getCheckins_count()));
-		put.add(Bytes.toBytes("business"), Bytes.toBytes("reviews count"),
-				Bytes.toBytes(business.getReviews_count()));
-		
-		//Foursquare API returns always null; 	
-		put.add(Bytes.toBytes("business"), Bytes.toBytes("tips count"),
-				Bytes.toBytes(business.getTips_count()));
-		
-		//data not provided by Foursquare API.
-		//put.add(Bytes.toBytes("metrics"), Bytes.toBytes("likes count"),
-		//		Bytes.toBytes(business.getLikes_count()));
-		
-		//Should this be put into reviews?
-		//put.add(Bytes.toBytes("business"), Bytes.toBytes("snippet text"),
-		//		Bytes.toBytes(business.getSnippet_text()));
-		
-//		LOCATION
-		put.add(Bytes.toBytes("location"), Bytes.toBytes("address"),
-				Bytes.toBytes(business.getFullAddress().getAddress()));
-		put.add(Bytes.toBytes("location"), Bytes.toBytes("formated address"),
-				Bytes.toBytes(business.getFullAddress().getDisplay_address()));
-		put.add(Bytes.toBytes("location"), Bytes.toBytes("city"),
-				Bytes.toBytes(business.getFullAddress().getCity()));
-		put.add(Bytes.toBytes("location"), Bytes.toBytes("state"),
-				Bytes.toBytes(business.getFullAddress().getState()));
-		put.add(Bytes.toBytes("location"), Bytes.toBytes("state code"),
-				Bytes.toBytes(business.getFullAddress().getState_code()));
-		put.add(Bytes.toBytes("location"), Bytes.toBytes("country"),
-				Bytes.toBytes(business.getFullAddress().getCountry()));
-		put.add(Bytes.toBytes("location"), Bytes.toBytes("country code"),
-				Bytes.toBytes(business.getFullAddress().getCountry_code()));
-		put.add(Bytes.toBytes("location"), Bytes.toBytes("postal"),
-				Bytes.toBytes(business.getFullAddress().getPostal_code()));
-		put.add(Bytes.toBytes("location"), Bytes.toBytes("latitude"),
-				Bytes.toBytes(business.getFullAddress().getLatitude()));
-		put.add(Bytes.toBytes("location"), Bytes.toBytes("longitude"),
-				Bytes.toBytes(business.getFullAddress().getLongitude()));
-		
-		table.put(put);
 	}
 	
 //	public void putBusinessLoop(HTable table, String rowKey, Business business)

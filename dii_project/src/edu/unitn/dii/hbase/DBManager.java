@@ -67,7 +67,11 @@ public class DBManager {
 		while(bitr.hasNext()){
 			Business business = new Business();
 			business=bitr.next();
-			byte[] rowkey_1 = DigestUtils.md5(business.getFullAddress().getCity());
+			String location = business.getFullAddress().getCity();
+			if(location==null){
+				location="unknown";
+			}
+			byte[] rowkey_1 = DigestUtils.md5(location);
 			byte[] rowkey_2 = one;
 			byte[] rowkey_3 = DigestUtils.md5(business.getBid());
 			byte[] brk= createCompositeKey(rowkey_1,rowkey_2,rowkey_3, null);

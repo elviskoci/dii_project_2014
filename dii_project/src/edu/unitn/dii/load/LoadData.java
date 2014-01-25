@@ -475,6 +475,6 @@ public class LoadData {
 	public static void main(String args[]){	
 		LoadData ld = new LoadData();
 		ld.combineDataFourSquareYelp("./storage/foursquare_output.ser","./storage/yelp_output_tn.ser");	
-		//ld.insertData("BusinessReview");
+		ld.insertData("BusinessReview");
 	}
 }
