@@ -10,11 +10,11 @@ public class Review implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String review_id;
-	private String text;
+	private String review_id="";
+	private String text="";
 	private Date created_at;
 	private int likes;
-	private String user_id;
+	private String user_id="";
 	private double rating;
 
 	public Review() {

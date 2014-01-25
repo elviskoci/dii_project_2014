@@ -6,14 +6,14 @@ public class FullAddress implements java.io.Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String address;
-	private String display_address;
-	private String city;
-	private String state;
-	private String country;
-	private String state_code;
-	private String postal_code;
-	private String country_code;
+	private String address="";
+	private String display_address="";
+	private String city="";
+	private String state="";
+	private String country="";
+	private String state_code="";
+	private String postal_code="";
+	private String country_code="";
 	private double latitude;
 	private double longitude;
 
