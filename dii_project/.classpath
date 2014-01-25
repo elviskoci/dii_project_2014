@@ -7,5 +7,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Google_Geocoder"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCSV"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Yelp"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hbase-libs"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

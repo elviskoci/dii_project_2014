@@ -37,17 +37,17 @@ public class TrentinoTips implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private transient ArrayList<CompleteTip[]> results = new ArrayList<CompleteTip[]>();
 	private TreeSet<Business> foursquare_businesses = new TreeSet<Business>();
-	private TreeMap<CompleteTip,Integer> uniqueTips = new TreeMap<CompleteTip,Integer>(new CompleteTipComparator());
+	private TreeMap<CompleteTip, Integer> uniqueTips = new TreeMap<CompleteTip,Integer>(new CompleteTipComparator());
 	private TreeMap<CompactVenue, Integer> uniqueVenues= new TreeMap<CompactVenue, Integer>(new CompactVenueComparator());
 	private int totalQueries=0;
 	private int succQueries=0;
 	private transient static int trials=1;
-	private transient int totalNrTips = 0;
+	private int totalNrTips = 0;
 	
 	public void executeBatchTipQueries(ArrayList<String> geopoints, String serialization_file){
 		  	  
+		  this.results = new ArrayList<CompleteTip[]>();
 		  Iterator<String> itr= geopoints.iterator();
-		  
 		  FoursquareApi foursquareApi2 = new FoursquareApi("5OUFCQD5N3ENAFDZIG1SSQXNWJX3HVB4VO4WMQYWKMBJVWC1","Y3QQXZOE3FX5EWYOH2KCMVJI4QP2GSPIZ41IZRC5UFJEFFHJ", "https://foursquare.com/user/53771962, https://www.foursquare.com"); 
 		  FoursquareApi foursquareApi1 = new FoursquareApi("3RSAQ4WRUOLBAH1DKGPXEDRHTPSMWGP10Q5DFMHY2FOZ2H5T","YKHNHUOWLGTFCNUKG1Q2APBZW5K5IM5GRLHBP3YNTCDZ2PDB", "http://www.emeo.com/user");
 		  FoursquareApi current = foursquareApi1; 
@@ -75,8 +75,8 @@ public class TrentinoTips implements java.io.Serializable {
 		  try {
 				serialiseTips(serialization_file);
 		  } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("SERIALIZATION FAILED!!");
+				System.out.println(e.getMessage());
 		  }
 	  }
 	  
@@ -342,7 +342,8 @@ public class TrentinoTips implements java.io.Serializable {
 		  System.out.println("Total number of successful queries performed :"+this.succQueries);
 		  System.out.println("Total number of retrived tips: "+this.totalNrTips);		  
 		  System.out.println("Total number of unique tips: "+this.uniqueTips.size());
-	      System.out.println("Total number of unique venues: "+this.uniqueVenues.size());
+		  System.out.println("Total number of unique venues: "+this.uniqueVenues.size());
+		  System.out.println("Total size of the result list is : "+this.results.size());
 	      System.out.println("Number of null venue objects returned: "+nullVenues);
 		  
 	  }
@@ -401,7 +402,6 @@ public class TrentinoTips implements java.io.Serializable {
 		  //The Api does not offer function
 		  //to get the likes for the tip.
 		  review.setLikes(-1);
-		  System.out.println("STATUS: "+tip.getStatus());
 		  if(tip.getUser()!=null){
 			  review.setUser_id(tip.getUser().getId());
 		  }else{
@@ -562,24 +562,17 @@ public class TrentinoTips implements java.io.Serializable {
 		if(deserialize){
 			try {
 				tt=deserialiseTips("./storage/foursquare_output.ser");
-			} catch (ClassNotFoundException | IOException e) {
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	    
 		tt.executeBatchTipQueries(PointsOfInterest.GEO_POINTS,"./storage/foursquare_output.ser");
-		tt.foursquareDataToBusinessData();
 		//tt.printSearchStats();
 		//tt.printTips();
-		
-		try {
-			tt.serialiseTips("./storage/foursquare_output.ser");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	 }
-		
+	 }		
 }

@@ -218,9 +218,11 @@ public class OpenDataVersions implements java.io.Serializable {
 			
 			currVer.serialiseVersions();
 			
-		} catch (ClassNotFoundException | IOException e1) {
+		} catch (ClassNotFoundException e1 ) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}catch (IOException e2){
+			e2.printStackTrace();
 		}
 			
 			
@@ -247,9 +249,11 @@ public class OpenDataVersions implements java.io.Serializable {
 				System.out.println(odv.formatDateToString(itrRec.next()));
 			}
 			
-		} catch (ClassNotFoundException | IOException e) {
+		} catch (ClassNotFoundException e1 ) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
+		}catch (IOException e2){
+			e2.printStackTrace();
 		}
 		
 		

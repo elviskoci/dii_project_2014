@@ -27,11 +27,11 @@ public class Query {
 			//Review: May you we should change the output of getPointsInCity to Arraylist
 			//That way we do not need  j  loop
 			
-			switch(city.getCityName().toLowerCase()){
-				case "bolzano":  numberOfPoints = 400;break;
-				case "trento":  numberOfPoints = 300;break;
-				default: numberOfPoints = 50;
-			}
+//			switch(city.getCityName().toLowerCase()){
+//				case "bolzano":  numberOfPoints = 400;break;
+//				case "trento":  numberOfPoints = 300;break;
+//				default: numberOfPoints = 50;
+//			}
 			/*
 			if (city.getCityName().equalsIgnoreCase("Bolzano") || city.getCityName().equalsIgnoreCase("Trento") || city.getCityName().equalsIgnoreCase("Merano") ){
 				numberOfPoints = 300;
@@ -67,8 +67,10 @@ public class Query {
 		  	tt =   TrentinoTips.deserialiseTips("./storage/foursquare_output.ser"); 
 		  	//tt.executeBatchTipQueries( pointsArray.get(2),"./storage/foursquare_output.ser");
 		  }
-		  catch (ClassNotFoundException | IOException e) { // TODO		  Auto-generated catch block 
-		  e.printStackTrace(); }//*/
+		  catch (ClassNotFoundException e) { // TODO		  Auto-generated catch block 
+		  e.printStackTrace(); }
+		  catch (IOException e) { // TODO		  Auto-generated catch block 
+			  e.printStackTrace(); }//*/
 		
 
 	}

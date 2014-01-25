@@ -27,22 +27,18 @@ import edu.unitn.dii.foursquare.PointsOfInterest;
 
 public class Yelp implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	private static final String consumerKey = "0s3dTw_R0XBpcQCkWY1ElA";
+	private static final String consumerSecret = "8Gw_JVHu5sqnrE80ULLDOdvLPPg";
+	private static final String token = "pBK0yxBYQN4xzlOAdw_IY3u1FWRVWPnZ";
+	private static final String tokenSecret = "rKGXQkK09jIndjh7Gt1_FQrGeqc";
 	private transient OAuthService service;
 	private transient Token accessToken;
 	private TreeMap<Business, Integer> yelp_results= new  TreeMap<Business, Integer>();
 	private int query_count=1;
 	private int total_review_count=0;
-
-	public Yelp(){
-		
-	}
 	
-	public Yelp(String consumerKey, String consumerSecret, String token,
-			String tokenSecret) {
+	private Yelp() {
 		this.service = new ServiceBuilder().provider(YelpApi2.class)
 				.apiKey(consumerKey).apiSecret(consumerSecret).build();
 		this.accessToken = new Token(token, tokenSecret);
@@ -78,9 +74,9 @@ public class Yelp implements java.io.Serializable {
 		request.addQuerystringParameter("ll", latitude + "," + longitude);
 		request.addQuerystringParameter("radius_filter", "" + radious);
 		request.addQuerystringParameter("limit", ""+l);
-		//localflavor,restaurants,food,italian,eventservices,hotelstravel,breweries,bars
-	//	request.addQuerystringParameter("category_filter",
-	//			"localflavor,restaurants,food,italian,eventservices,hotelstravel,breweries,bars");
+//		localflavor,restaurants,food,italian,eventservices,hotelstravel,breweries,bars
+//		request.addQuerystringParameter("category_filter",
+//				"localflavor,restaurants,food,italian,eventservices,hotelstravel,breweries,bars");
 		this.service.signRequest(this.accessToken, request);
 		Response response = request.send();
 		return response.getBody();
@@ -89,7 +85,7 @@ public class Yelp implements java.io.Serializable {
 	public String getBusiness(String business) {
 		OAuthRequest request = new OAuthRequest(Verb.GET,
 				"http://api.yelp.com/v2/business/" + business);
-		//request.addQuerystringParameter("lang_filter", "it");
+//		request.addQuerystringParameter("lang_filter", "it");
 		this.service.signRequest(this.accessToken, request);
 		Response response = request.send();
 		return response.getBody();
@@ -101,9 +97,7 @@ public class Yelp implements java.io.Serializable {
 
 		try {
 			value = json.getString(element);
-		} catch (JSONException e) {
-			//System.out.println("Exception while parsing value");
-		}
+		} catch (JSONException e) {}
 
 		return value;
 	}
@@ -114,9 +108,7 @@ public class Yelp implements java.io.Serializable {
 
 		try {
 			array = json.getJSONArray(element);
-		} catch (JSONException e) {
-			//System.out.println("Exception while parsing array. Return empty");
-		}
+		} catch (JSONException e) {}
 
 		return array;
 	}
@@ -127,9 +119,7 @@ public class Yelp implements java.io.Serializable {
 
 		try {
 			obj = json.getJSONObject(element);
-		} catch (JSONException e) {
-			//System.out.println("Exception while parsing array. Return empty");
-		}
+		} catch (JSONException e) {}
 
 		return obj;
 	}
@@ -379,21 +369,20 @@ public class Yelp implements java.io.Serializable {
 	}
 
 	public static void main(String[] args) {
-		String consumerKey = "0s3dTw_R0XBpcQCkWY1ElA";
-		String consumerSecret = "8Gw_JVHu5sqnrE80ULLDOdvLPPg";
-		String token = "pBK0yxBYQN4xzlOAdw_IY3u1FWRVWPnZ";
-		String tokenSecret = "rKGXQkK09jIndjh7Gt1_FQrGeqc";
 
-		boolean deserialize = true;
-		Yelp yelp = new Yelp(consumerKey, consumerSecret, token, tokenSecret);
+		boolean deserialize =false;
+		Yelp yelp = new Yelp();
 				
 		if(deserialize){
 			try {
-				yelp=deserialiseYelpData("./storage/yelp_output.ser");
+				yelp=deserialiseYelpData("./storage/yelp_output_1500.ser");
 				yelp.setService(new ServiceBuilder().provider(YelpApi2.class)
 						.apiKey(consumerKey).apiSecret(consumerSecret).build());
 				yelp.setAccessToken(new Token(token, tokenSecret));			
-			} catch (ClassNotFoundException | IOException e) {
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
