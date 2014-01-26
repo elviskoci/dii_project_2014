@@ -150,10 +150,13 @@ public class HBaseHelper {
 		//insert code for puting reviews
 	}
 	
-	public void insertBusiness(HTable table, byte[] rowKey, Business business)
+	public Boolean insertBusiness(HTable table, byte[] rowKey, Business business)
 			throws IOException {
 		
+		String tempRow = "";
 		try{
+			 //delete later..not needed
+			
 			Put put = new Put(rowKey);
 			put.add(Bytes.toBytes("business"), Bytes.toBytes("name"),
 					Bytes.toBytes(business.getName()));
@@ -165,6 +168,7 @@ public class HBaseHelper {
 				concat_categories=concat_categories+categories.get(i)+",";
 			}
 			concat_categories=concat_categories.substring(0, concat_categories.length());
+			tempRow = " category: " + concat_categories;
 			put.add(Bytes.toBytes("business"), Bytes.toBytes("categories"),
 					Bytes.toBytes(concat_categories));
 			
@@ -183,6 +187,12 @@ public class HBaseHelper {
 					Bytes.toBytes(business.getCheckins_count()));
 			put.add(Bytes.toBytes("business"), Bytes.toBytes("reviews count"),
 					Bytes.toBytes(business.getReviews_count()));
+			
+			tempRow = tempRow + " rating: " + business.getRating();
+			tempRow = tempRow + " checkins_count: " + business.getCheckins_count();
+			tempRow = tempRow + " Review count: " + business.getReviews_count();
+			
+			
 			
 			//Foursquare API returns always null; 	
 			put.add(Bytes.toBytes("business"), Bytes.toBytes("tips count"),
@@ -223,7 +233,10 @@ public class HBaseHelper {
 		}catch (NullPointerException e){
 			
 			System.out.println("NULL VALUE WAS FOUND");
+			return false;
 		}
+		System.out.println(tempRow);
+		return true;
 	}
 	
 //	public void putBusinessLoop(HTable table, String rowKey, Business business)

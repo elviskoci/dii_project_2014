@@ -21,7 +21,7 @@ import edu.unitn.dii.yelp.Review;
 //make it singleton
 public class DBManager {
 	private static DBManager instance = null;
-	private static final HBaseHelper hbase = HBaseHelper.create();
+	public static final HBaseHelper hbase = HBaseHelper.create();
 
 	protected DBManager() {
 		// Exists only to defeat instantiation.
@@ -64,6 +64,8 @@ public class DBManager {
 		byte[] one = Bytes.toBytes(1);
 		byte[] two = Bytes.toBytes(2);
 		
+		int trentoCount = 0;
+		
 		while(bitr.hasNext()){
 			Business business = new Business();
 			business=bitr.next();
@@ -76,7 +78,14 @@ public class DBManager {
 			byte[] rowkey_3 = DigestUtils.md5(business.getBid());
 			byte[] brk= createCompositeKey(rowkey_1,rowkey_2,rowkey_3, null);
 			
-			hbase.insertBusiness(table, brk, business);
+			System.out.println("location:" + location + " type:" + 1 + " businessId:" + business.getBid());
+			System.out.println ("Key:" + getHexKey(brk));
+			boolean success = hbase.insertBusiness(table, brk, business);
+			
+			if (location.trim().compareToIgnoreCase("Trento")==0  && success == true){
+				System.out.println("##location:" + location + " type:" + 1 + " businessId:" + business.getBid());
+				trentoCount++;
+			}
 			
 			ArrayList<Review> reviews = business.getReviews();
 			Iterator<Review> ritr = reviews.iterator();
@@ -90,8 +99,23 @@ public class DBManager {
 				hbase.insertReview(table, rvk, review);	
 			}
 		}
+		System.out.println ("Number of trento : " + trentoCount);
+		
+		
 	}
 	
+	private String getHexKey(byte[] rowkey) {
+		 StringBuilder sb = new StringBuilder(2 * rowkey.length); 
+		 for (byte b: rowkey) { 
+			 sb.append(String.format("%02x", b & 0xff)); 
+			 }
+		 String  digest = sb.toString();
+				  
+				 
+				  
+		return digest;
+	}
+
 	private byte[] createCompositeKey(byte[] rowkey_1, byte[] rowkey_2,
 			byte[] rowkey_3, byte[] rowkey_4) {
 

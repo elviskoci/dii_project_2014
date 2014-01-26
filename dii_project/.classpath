@@ -3,10 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Crawler"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Foursquare"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Google_Geocoder"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCSV"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/FourSquare"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Google_geocoder"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCSV_"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Yelp"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hbase-libs"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hbase"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
