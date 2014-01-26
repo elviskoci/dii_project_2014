@@ -329,6 +329,8 @@ public class LoadData {
     	if(al!=null && bl!=null){
     		
 	    	if(		al.getCity()!=null && bl.getCity()!=null && 
+	    			bl.getCity().compareToIgnoreCase("unknown")!=0 && 
+	    		    al.getCity().compareToIgnoreCase("unknown")!=0 &&
 	    			bl.getCity().compareToIgnoreCase("null")!=0 && 
 	    		    al.getCity().compareToIgnoreCase("null")!=0 &&
 	    		    al.getCity().compareTo("")!=0 && bl.getCity().compareTo("")!=0){
@@ -474,7 +476,7 @@ public class LoadData {
 	
 	public static void main(String args[]){	
 		LoadData ld = new LoadData();
-		ld.combineDataFourSquareYelp("./storage/foursquare_output.ser","./storage/yelp_output_tn.ser");	
+		ld.combineDataFourSquareYelp("./storage/foursquare_output.ser","./storage/yelp_output.ser");	
 		ld.insertData("BusinessReview");
 	}
 }

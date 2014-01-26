@@ -93,7 +93,7 @@ public class Yelp implements java.io.Serializable {
 
 	public String parseJSONValue(JSONObject json, String element) {
 
-		String value = "";
+		String value = "null";
 
 		try {
 			value = json.getString(element);
@@ -175,7 +175,7 @@ public class Yelp implements java.io.Serializable {
 			String reviewId="", review_text="", snippet_text="";
 			int nr_reviews=-1;
 			double business_rating=-1.0, review_rating=-1.0;
-			Date createdAt=new Date();
+			long createdAt=0;
 			boolean is_closed=false;
 			
 			while (bt.hasNext()) {
@@ -189,15 +189,15 @@ public class Yelp implements java.io.Serializable {
 				display_phone = parseJSONValue(completeBusiness, "display_phone");
 				url = parseJSONValue(completeBusiness, "url");
 				val=parseJSONValue(completeBusiness,"review_count");
-				if(val.compareTo("")!=0)
+				if(val.compareTo("null")!=0)
 				nr_reviews = Integer.parseInt(val);
 				
 				val=parseJSONValue(completeBusiness,"rating");
-				if(val.compareTo("")!=0)
+				if(val.compareTo("null")!=0)
 				business_rating = Double.parseDouble(val);
 				
 				val=parseJSONValue(completeBusiness,"is_closed");
-				if(val.compareTo("")!=0)
+				if(val.compareTo("null")!=0)
 				is_closed = Boolean.parseBoolean(val);
 				
 				System.out.println("Business id: "+id);
@@ -232,6 +232,9 @@ public class Yelp implements java.io.Serializable {
 						frmt_adr=frmt_adr+formated_address.getString(l)+"\n";
 					}
 					city = parseJSONValue(location, "city");
+					if(city.compareTo("")==0){
+						city="unknown";
+					}
 					state_code= parseJSONValue(location, "state_code");
 					country_code =parseJSONValue(location, "country_code");
 					postal_code=parseJSONValue(location,"postal_code");
@@ -254,11 +257,11 @@ public class Yelp implements java.io.Serializable {
 					review_rating = Double.parseDouble(val);
 					val=parseJSONValue(review,"time_created");
 					if(val.compareTo("")!=0)
-					createdAt = new Date(Long.parseLong(val));					
+					createdAt = Long.parseLong(val);					
 					System.out.println("Review"+(k + 1)+" ID: "+ reviewId);
 					System.out.println("Review"+(k + 1)+" Text: "+ review_text);
 					System.out.println("Review"+(k + 1)+" Rating: "+ review_rating);
-					System.out.println("Review"+(k + 1)+" Date: "+ createdAt.toString());
+					System.out.println("Review"+(k + 1)+" Date: "+ (new Date(createdAt)).toString());
 					System.out.println();
 					business_review_list.add(new Review(reviewId, review_text, createdAt, review_rating));
 				}

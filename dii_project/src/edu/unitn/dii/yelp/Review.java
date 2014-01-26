@@ -12,23 +12,23 @@ public class Review implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private String review_id="";
 	private String text="";
-	private Date created_at;
-	private int likes;
+	private long created_at=0;
+	private int likes=-1;
 	private String user_id="";
-	private double rating;
+	private double rating=1.0;
 
 	public Review() {
 
 	}
 	
-	public Review(String id, String text, Date created_at) {
+	public Review(String id, String text, long created_at) {
 
 		this.review_id = id;
 		this.text = text;
 		this.created_at = created_at;
 	}
 	
-	public Review(String id, String text, Date created_at, double rating) {
+	public Review(String id, String text, long created_at, double rating) {
 
 		this.review_id = id;
 		this.text = text;
@@ -36,7 +36,7 @@ public class Review implements java.io.Serializable {
 		this.rating= rating;
 	}
 	
-	public Review(String id, String text, Date created_at, String user_id, double rating) {
+	public Review(String id, String text, long created_at, String user_id, double rating) {
 
 		this.review_id = id;
 		this.text = text;
@@ -45,7 +45,7 @@ public class Review implements java.io.Serializable {
 		this.user_id=user_id;
 	}
 	
-	public Review(String id, String text, Date created_at, int likes, String user_id, double rating) {
+	public Review(String id, String text, long created_at, int likes, String user_id, double rating) {
 
 		this.review_id = id;
 		this.text = text;
@@ -72,11 +72,11 @@ public class Review implements java.io.Serializable {
 		this.text = text;
 	}
 
-	public Date getCreated_at() {
+	public long getCreated_at() {
 		return created_at;
 	}
 
-	public void setCreated_at(Date created_at) {
+	public void setCreated_at(long created_at) {
 		this.created_at = created_at;
 	}
 
