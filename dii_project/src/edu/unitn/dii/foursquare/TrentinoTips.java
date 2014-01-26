@@ -109,12 +109,6 @@ public class TrentinoTips implements java.io.Serializable {
 //			  }  
 //		  } 
 		  
-//		  System.out.println("Total number of queries performed :"+this.totalQueries);
-//		  System.out.println("Total number of successful queries performed :"+this.succQueries);
-//		  System.out.println("Total number of retrived tips: "+this.totalNrTips);		  
-//		  System.out.println("Total number of unique tips: "+this.uniqueTips.size());
-//		  System.out.println("Total number of repetitions: "+totalRep);
-
 		  TipRepetitionComparator trc = new TipRepetitionComparator(this.uniqueTips);
 	      TreeMap<CompleteTip,Integer> sorted_tips = new TreeMap<CompleteTip,Integer>(trc);
 	      sorted_tips.putAll(this.uniqueTips);
@@ -159,9 +153,6 @@ public class TrentinoTips implements java.io.Serializable {
 	      VenueRepetitionComparator vrc = new VenueRepetitionComparator(this.uniqueVenues);
 	      TreeMap<CompactVenue,Integer> sorted_venues = new TreeMap<CompactVenue,Integer>(vrc);
 	      sorted_venues.putAll(this.uniqueVenues);
-//	      System.out.println("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-//	      System.out.println("Total number of unique venues: "+this.uniqueVenues.size());
-//	      System.out.println("Number of null venue objects returned: "+nullVenues);
 	      System.out.println("Venues sorted by number of repetitions: \n");
 	      
 	      Set<CompactVenue> venues_set = sorted_venues.descendingKeySet();
@@ -348,15 +339,24 @@ public class TrentinoTips implements java.io.Serializable {
 		  
 	  }
 	  
+	  private String handleNullVal(String val){
+		  
+		  if(val==null){
+			  return "null"; 
+		  }
+		  
+		  return val;
+	  }
+	  
 	  private Business venueToBusiness(CompactVenue venue){
 		  	
 		  	Business business = new Business();
 			business.setBid(venue.getId());
-			business.setName(venue.getName());
-			business.setUrl(venue.getUrl());
+			business.setName(handleNullVal(venue.getName()));
+			business.setUrl(handleNullVal(venue.getUrl()));
 			
 			if(venue.getContact()!=null)
-			business.setPhone(venue.getContact().getPhone());
+			business.setPhone(handleNullVal(venue.getContact().getPhone()));
 			
 			Category[] categories= venue.getCategories();
 			ArrayList<String> catgrs_list = new ArrayList<String>();
@@ -364,6 +364,8 @@ public class TrentinoTips implements java.io.Serializable {
 				for(int i=0;i<categories.length;i++){
 					catgrs_list.add(categories[0].getName());
 				}
+			}else{
+				catgrs_list.add("null");
 			}
 			
 			business.setCategories(catgrs_list);
@@ -381,9 +383,15 @@ public class TrentinoTips implements java.io.Serializable {
 			FullAddress loc = new FullAddress();
 			
 			if(location!=null){
-				loc=new FullAddress(location.getAddress(),location.getCity()
-						,location.getState(), location.getCountry(),
-						location.getPostalCode(),location.getLat(),
+				
+				String city = location.getCity();
+				if(city==null){
+					city="unknown";
+				}
+				
+				loc=new FullAddress(handleNullVal(location.getAddress()),city
+						,handleNullVal(location.getState()), handleNullVal(location.getCountry()),
+						handleNullVal(location.getPostalCode()),location.getLat(),
 						location.getLng());
 			}
 			
@@ -395,7 +403,7 @@ public class TrentinoTips implements java.io.Serializable {
 	  private Review tipToReview(CompleteTip tip){
 		  
 		  Review review = new Review();
-		  review.setCreated_at(new Date((Long)tip.getCreatedAt()));
+		  review.setCreated_at((Long)tip.getCreatedAt().longValue());
 		  review.setText(tip.getText());
 		  review.setReview_id(tip.getId());
 		  //I could not find likes. 
