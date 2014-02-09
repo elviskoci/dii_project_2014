@@ -48,8 +48,6 @@ public class TrentinoTips implements java.io.Serializable {
 		  	  
 		  this.results = new ArrayList<CompleteTip[]>();
 		  Iterator<String> itr= geopoints.iterator();
-		  FoursquareApi foursquareApi2 = new FoursquareApi("5OUFCQD5N3ENAFDZIG1SSQXNWJX3HVB4VO4WMQYWKMBJVWC1","Y3QQXZOE3FX5EWYOH2KCMVJI4QP2GSPIZ41IZRC5UFJEFFHJ", "https://foursquare.com/user/53771962, https://www.foursquare.com"); 
-		  FoursquareApi foursquareApi1 = new FoursquareApi("3RSAQ4WRUOLBAH1DKGPXEDRHTPSMWGP10Q5DFMHY2FOZ2H5T","YKHNHUOWLGTFCNUKG1Q2APBZW5K5IM5GRLHBP3YNTCDZ2PDB", "http://www.emeo.com/user");
 		  FoursquareApi current = foursquareApi1; 
 		  
 		  //Call the foursquare api for each geographical point of interest
