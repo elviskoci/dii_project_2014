@@ -28,10 +28,6 @@ import edu.unitn.dii.foursquare.PointsOfInterest;
 public class Yelp implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final String consumerKey = "0s3dTw_R0XBpcQCkWY1ElA";
-	private static final String consumerSecret = "8Gw_JVHu5sqnrE80ULLDOdvLPPg";
-	private static final String token = "pBK0yxBYQN4xzlOAdw_IY3u1FWRVWPnZ";
-	private static final String tokenSecret = "rKGXQkK09jIndjh7Gt1_FQrGeqc";
 	private transient OAuthService service;
 	private transient Token accessToken;
 	private TreeMap<Business, Integer> yelp_results= new  TreeMap<Business, Integer>();
